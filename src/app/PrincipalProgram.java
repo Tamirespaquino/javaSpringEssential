@@ -1,6 +1,7 @@
 package app;
 
 import entities.Employee;
+import services.BrazilTaxService;
 import services.PensionService;
 import services.SalaryService;
 import services.TaxService;
@@ -22,7 +23,10 @@ public class PrincipalProgram {
         double grossSalary = enter.nextDouble();
 
         Employee employee = new Employee(name, grossSalary);
-        SalaryService salaryService = new SalaryService();
+        TaxService taxService = new BrazilTaxService(); // upcasting
+        PensionService pensionService = new PensionService();
+
+        SalaryService salaryService = new SalaryService(taxService, pensionService);
 
         double netSalary = salaryService.netSalary(employee);
         System.out.printf("Salario liquido: R$ %.2f%n", netSalary);
